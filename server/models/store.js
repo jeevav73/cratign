@@ -24,8 +24,15 @@ export function createStore(database) {
       },
       async createContact(payload) {
         const [result] = await database.execute(
-          'INSERT INTO contacts (name, email, company, message) VALUES (?, ?, ?, ?)',
-          [payload.name, payload.email, payload.company || '', payload.message],
+          'INSERT INTO contacts (name, email, company, message, attachment_name, attachment_path) VALUES (?, ?, ?, ?, ?, ?)',
+          [
+            payload.name,
+            payload.email,
+            payload.company || '',
+            payload.message,
+            payload.attachmentName || '',
+            payload.attachmentPath || '',
+          ],
         );
         return { id: result.insertId, ...payload };
       },

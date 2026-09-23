@@ -31,9 +31,26 @@ export function fetchTestimonials() {
   return request('/testimonials');
 }
 
-export function submitContact(body) {
+export async function submitContact(body) {
+  const payload = { ...body };
+  if (body.attachment) {
+    payload.attachment = {
+      name: body.attachment.name,
+      type: body.attachment.type,
+      data: await readFileAsDataUrl(body.attachment),
+    };
+  }
   return request('/contact', {
     method: 'POST',
-    body: JSON.stringify(body),
+    body: JSON.stringify(payload),
+  });
+}
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error('Unable to read the attachment.'));
+    reader.readAsDataURL(file);
   });
 }

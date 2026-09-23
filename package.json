@@ -13,14 +13,16 @@
     "start": "NODE_ENV=production node server/server.js"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1137.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
+    "dotenv": "^16.6.1",
     "express": "^4.21.2",
     "express-rate-limit": "^7.5.0",
     "framer-motion": "^12.6.3",
     "gsap": "^3.12.7",
     "lenis": "^1.2.3",
     "lucide-react": "^0.487.0",
+    "multer": "^2.4.0",
     "mysql2": "^3.24.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

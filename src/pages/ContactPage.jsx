@@ -3,7 +3,7 @@ import { submitContact } from '../utils/api.js';
 import MagneticButton from '../components/MagneticButton.jsx';
 import { SOCIAL_LINKS } from '../data/site.js';
 
-const INITIAL = { name: '', email: '', company: '', message: '' };
+const INITIAL = { name: '', email: '', company: '', message: '', attachment: null };
 
 export default function ContactPage() {
   const [form, setForm] = useState(INITIAL);
@@ -12,8 +12,8 @@ export default function ContactPage() {
   const [fields, setFields] = useState({});
 
   const onChange = (event) => {
-    const { name, value } = event.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    const { name, value, files } = event.target;
+    setForm((prev) => ({ ...prev, [name]: files ? files[0] || null : value }));
   };
 
   const onSubmit = async (event) => {
@@ -73,6 +73,22 @@ export default function ContactPage() {
           error={fields.name}
           required
         />
+        <label className="block">
+          <span className="font-display text-[11px] tracking-[0.22em] text-muted">
+            ATTACHMENT (OPTIONAL, MAX 10 MB)
+          </span>
+          <input
+            id="attachment"
+            name="attachment"
+            type="file"
+            accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.webp"
+            onChange={onChange}
+            className="mt-3 block w-full text-sm text-muted file:mr-4 file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-2 file:font-display file:text-xs file:text-ink"
+          />
+          {form.attachment ? (
+            <span className="mt-2 block text-xs text-paper-dim">{form.attachment.name}</span>
+          ) : null}
+        </label>
         <Field
           label="Email"
           name="email"

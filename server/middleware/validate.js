@@ -39,6 +39,7 @@ export function validateContact(req, res, next) {
     email: email.trim().toLowerCase(),
     company: typeof company === 'string' ? company.trim() : '',
     message: message.trim(),
+    attachment: req.body.attachment,
   };
 
   next();

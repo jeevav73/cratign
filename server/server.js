@@ -34,7 +34,7 @@ app.use(
     methods: ['GET', 'POST', 'OPTIONS'],
   }),
 );
-app.use(express.json({ limit: '32kb' }));
+app.use(express.json({ limit: '15mb' }));
 
 const contactLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -49,6 +49,7 @@ app.get('/api/health', (req, res) => {
     success: true,
     status: 'ok',
     storage: database ? 'mysql' : 'memory',
+    attachments: process.env.AWS_REGION && process.env.S3_BUCKET ? 's3' : 'unconfigured',
   });
 });
 

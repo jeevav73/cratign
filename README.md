@@ -106,6 +106,11 @@ Validation:
 Success: `201` with a confirmation message.  
 Failure: `400` with `fields` for invalid input. Contact submissions are rate limited.
 
+Attachments are uploaded to the private S3 bucket configured by `AWS_REGION` and `S3_BUCKET`.
+The server uses the AWS default credential chain, so local development can use `aws configure`
+and deployed environments should use an IAM role. The role or user needs `s3:PutObject` for
+`arn:aws:s3:::<bucket>/contacts/*`.
+
 ### MySQL setup
 
 Copy `.env.example` to `.env`, set the MySQL connection values, and start the server with
